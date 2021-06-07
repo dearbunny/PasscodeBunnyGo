@@ -17,7 +17,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var moodLabel: UILabel!
     
     // 數字鍵
-    
     @IBOutlet var numBtn: [UIButton]!
     
     // 密碼圖
@@ -25,14 +24,10 @@ class ViewController: UIViewController {
     @IBOutlet var guessbackImage: [UIImageView]!
     
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         reset()
-
     }
-    
     
     
     
@@ -63,16 +58,15 @@ class ViewController: UIViewController {
     }
     
     
-    //重設
+    // 重設
     func reset() {
-        
         for i in 0...3 {
             guessImages[i].isHidden = true
             guessbackImage[i].isHidden = false
         }
         enter = ""
         moodLabel.text = "輸入密碼才能和可愛的我相見"
-
+        moodImageView.image = UIImage(named: "mood-1")
     }
     
     
@@ -85,6 +79,7 @@ class ViewController: UIViewController {
             guessbackImage[0].isHidden = true
             for i in 1...3{
                 guessImages[i].isHidden = true
+                guessbackImage[i].isHidden = false
             }
         case 2:
             for i in 0...3{
@@ -123,7 +118,8 @@ class ViewController: UIViewController {
         //輸入正確密碼時
         if enter == correctPasscode{
             let controller = UIAlertController(title: "密碼正確", message: "恭喜！", preferredStyle: .alert)
-            moodLabel.text = "密碼正確，我來了！"
+            moodLabel.text = "密碼正確，接受我的飛撲吧！"
+            moodImageView.image = UIImage(named: "mood-right")
             let action = UIAlertAction(title: "OK", style: .default) { (_) in
                 self.reset()
             }
@@ -133,7 +129,10 @@ class ViewController: UIViewController {
         //輸入錯誤密碼時
         else if enter != correctPasscode{
             let controller = UIAlertController(title: "密碼錯誤", message: "請確認密碼", preferredStyle: .alert)
-            moodLabel.text = "密碼錯誤，再見了！"
+            //密碼錯誤 圖文"
+            wrongMessage()
+            worngImage()
+            
             let action = UIAlertAction(title: "再次輸入", style: .default) { (_) in
                 self.reset()
             }
@@ -142,56 +141,16 @@ class ViewController: UIViewController {
         }
     }
     
-    
-    
-    /*
-    func initialImage() {
-        for i in 0...guessImages.count-1 {
-            //設定遮罩
-            let imageView = UIImageView(image: UIImage(named: "\(guessImageName[i])"))
-            imageView.contentMode = .scaleAspectFit
-            imageView.frame = CGRect(x: 0, y: 0, width: 70, height: 70)
-
-            let backImageView = UIImageView(image: UIImage(named: "\(guessBackImageName[i])"))
-            backImageView.contentMode = .scaleAspectFit
-            imageView.frame = CGRect(x: 0, y: 0, width: 70, height: 70)
-            //clear guessImage
-            guessImages[i].isHidden = true
-
-        }
+    // 輸入錯誤文字訊息
+    func worngImage() {
+        let moodArray = ["mood-2","mood-3","mood-4","mood-5","mood-6"]
+        let wornRandomImage = moodArray.randomElement()!
+        moodImageView.image = UIImage(named: wornRandomImage)
     }
-    
-    // 檢查密碼
-    func showImage() {
-        print("check passcode")
-
-        let passcodeCount = inputPasscodeStr.count
-
-        moodImageView.image = UIImage(named: "mood-1")
-        moodLabel.text = "輸入密碼才能和可愛的我相見"
-
-        if guessPasscode == correctPasscode{
-            print("CORRECT!")
-            let alert = UIAlertController(title: "密碼正確", message: "恭喜！", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK!", style: .default) { (_)
-                in
-                self.initial()
-            }
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
-        } else{
-            let  alert = UIAlertController(title: "密碼錯誤", message: "請確認密碼", preferredStyle: .alert)
-            let action = UIAlertAction(title: "再次輸入", style: .default) { (_) in
-                self.showImage()
-            }
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
-
-
-        }
+    func wrongMessage() {
+        let worngLabel = ["你不愛我了...","吼呦～吼呦～我不管","我好難過...","再這樣，我們只好說再見了...","你是不是不想見到我..."]
+        let wornRandomText = worngLabel.randomElement()!
+        moodLabel.text = wornRandomText
     }
-    */
-
-
 }
 
